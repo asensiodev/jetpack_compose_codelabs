@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -39,7 +40,21 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(
+fun MyApp(modifier: Modifier = Modifier) {
+
+    var shouldShowOnboarding by remember { mutableStateOf(true) }
+
+    Surface(modifier) {
+        if (shouldShowOnboarding) {
+            OnboardingScreen { shouldShowOnboarding = false }
+        } else {
+            Greetings()
+        }
+    }
+}
+
+@Composable
+fun Greetings(
     modifier: Modifier = Modifier,
     names: List<String> = listOf("World", "Compose")
 ) {
@@ -83,6 +98,6 @@ fun Greeting(
 @Composable
 fun GreetingPreview() {
     BasicsCodelabTheme {
-        MyApp()
+        MyApp(Modifier.fillMaxSize())
     }
 }
