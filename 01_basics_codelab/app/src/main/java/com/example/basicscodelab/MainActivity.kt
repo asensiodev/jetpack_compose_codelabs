@@ -76,7 +76,7 @@ fun Greeting(
     var expanded by rememberSaveable { mutableStateOf(false) }
     val extraPadding by animateDpAsState(
         if (expanded) 48.dp else 0.dp,
-        label = "",
+        label = "Animation",
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessLow
