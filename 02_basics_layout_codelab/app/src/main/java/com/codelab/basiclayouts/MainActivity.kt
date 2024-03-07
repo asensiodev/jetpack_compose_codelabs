@@ -215,6 +215,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         HomeSection(title = R.string.favorite_collections) {
             FavoriteCollectionsGrid()
         }
+        Spacer(Modifier.height(16.dp))
     }
 }
 
