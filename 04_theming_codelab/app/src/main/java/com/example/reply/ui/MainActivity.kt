@@ -42,8 +42,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             val uiState by viewModel.uiState.collectAsState()
 
-            Surface(tonalElevation = 5.dp) {
-                AppTheme {
+            AppTheme {
+                Surface(tonalElevation = 5.dp) {
                     ReplyApp(
                         replyHomeUIState = uiState,
                         closeDetailScreen = {
