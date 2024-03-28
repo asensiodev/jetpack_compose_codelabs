@@ -308,17 +308,15 @@ private fun HomeFloatingActionButton(
  */
 @Composable
 private fun EditMessage(shown: Boolean) {
-    // TODO 2-2: The message should slide down from the top on appearance and slide up on
-    //           disappearance.
     AnimatedVisibility(
         visible = shown,
         enter = slideInVertically(
             // Enters by sliding down from offset -fullHeight to 0.
-            initialOffsetY = { fullHeight -> -fullHeight }
+            initialOffsetY = { fullHeight -> -fullHeight } // From where to start the animation
         ),
         exit = slideOutVertically(
             // Exits by sliding up from offset 0 to -fullHeight.
-            targetOffsetY = { fullHeight -> -fullHeight }
+            targetOffsetY = { fullHeight -> -fullHeight } // To where the animation will land and end
         )
     ) {
         Surface(
