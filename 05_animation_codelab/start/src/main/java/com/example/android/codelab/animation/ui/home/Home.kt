@@ -18,6 +18,10 @@ package com.example.android.codelab.animation.ui.home
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -312,11 +316,13 @@ private fun EditMessage(shown: Boolean) {
         visible = shown,
         enter = slideInVertically(
             // Enters by sliding down from offset -fullHeight to 0.
-            initialOffsetY = { fullHeight -> -fullHeight } // From where to start the animation
+            initialOffsetY = { fullHeight -> -fullHeight }, // From where to start the animation
+            animationSpec = tween(durationMillis = 150, easing = LinearOutSlowInEasing)
         ),
         exit = slideOutVertically(
             // Exits by sliding up from offset 0 to -fullHeight.
-            targetOffsetY = { fullHeight -> -fullHeight } // To where the animation will land and end
+            targetOffsetY = { fullHeight -> -fullHeight }, // To where the animation will land and end
+            animationSpec = tween(durationMillis = 350, easing = FastOutLinearInEasing)
         )
     ) {
         Surface(
