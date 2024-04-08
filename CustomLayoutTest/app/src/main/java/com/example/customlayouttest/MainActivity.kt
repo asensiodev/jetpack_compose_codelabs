@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -74,15 +75,14 @@ fun DayLabel(day: String, modifier: Modifier = Modifier) {
 fun SleepBar(modifier: Modifier = Modifier) {
     val brush = Brush.linearGradient(colors = listOf(Color.Blue, Color.Green))
 
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
+    Box(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(5.dp))
             .background(brush)
             .padding(horizontal = 12.dp)
     ) {
-        Spacer(Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(18.dp))
     }
 }
 
