@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -21,9 +21,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.customlayouttest.ui.theme.CustomLayoutTestTheme
@@ -50,22 +53,26 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun HoursHeader(modifier: Modifier = Modifier) {
-    val hours = arrayOf(20, 21, 22, 23, 0, 1, 2)
+fun HoursHeader(hours: List<Int>) {
     val brush = Brush.linearGradient(colors = listOf(Color.Blue, Color.Green))
-
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(5.dp))
-            .background(brush)
-            .padding(horizontal = 12.dp)
+        modifier = Modifier
+            .padding(bottom = 16.dp)
+            .drawBehind {
+                drawRoundRect(
+                    brush,
+                    cornerRadius = CornerRadius(10.dp.toPx(), 10.dp.toPx())
+                )
+            }
     ) {
-        for (item in hours) {
+        hours.forEach { hour ->
             Text(
-                text = item.toString(),
-                fontWeight = FontWeight.Bold
+                text = "$hour",
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .width(50.dp)
+                    .padding(vertical = 4.dp)
             )
         }
     }
@@ -118,7 +125,8 @@ fun TimeGraph(
 @Preview
 @Composable
 fun HoursHeaderPreview() {
-    HoursHeader()
+    val hours = listOf(20, 21, 22, 23, 0, 1, 2)
+    HoursHeader(hours)
 }
 
 @Preview
