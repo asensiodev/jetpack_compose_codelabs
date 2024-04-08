@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,85 +53,29 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@Composable
-fun HoursHeader(hours: List<Int>) {
-    val brush = Brush.linearGradient(colors = listOf(Color.Blue, Color.Green))
-    Row(
-        modifier = Modifier
-            .padding(bottom = 16.dp)
-            .drawBehind {
-                drawRoundRect(
-                    brush,
-                    cornerRadius = CornerRadius(10.dp.toPx(), 10.dp.toPx())
-                )
-            }
-    ) {
-        hours.forEach { hour ->
-            Text(
-                text = "$hour",
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .width(50.dp)
-                    .padding(vertical = 4.dp)
-            )
-        }
-    }
-}
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun DayLabel(dayOfWeek: DayOfWeek) {
-    Text(
-        text = dayOfWeek.getDisplayName(
-            TextStyle.SHORT, Locale.getDefault()
-        ),
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier
-            .height(24.dp)
-            .padding(start = 8.dp, end = 24.dp)
-    )
-}
-
-@Composable
-fun SleepBar(modifier: Modifier = Modifier) {
-    val brush = Brush.linearGradient(colors = listOf(Color.Blue, Color.Green))
-
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(5.dp))
-            .background(brush)
-            .padding(horizontal = 12.dp)
-    ) {
-        Spacer(modifier = Modifier.height(18.dp))
-    }
-}
 
 @Composable
 fun TimeGraph(
     hoursHeader: @Composable () -> Unit,
     rowCount: Int,
     dayLabel: @Composable (index: Int) -> Unit,
-    sleepBar: @Composable () -> Unit,
+    sleepBar: @Composable (index: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
-    val dayLabels = @Composable {
-        repeat(rowCount) { dayLabel(it) }
+    val dayLabels = @Composable { repeat(rowCount) { dayLabel(it) } }
+    val sleepBars = @Composable { repeat(rowCount) { sleepBar(it) } }
+
+    /*Layout(
+        contents = listOf(hoursHeader, dayLabels, sleepBars),
+        modifier = Modifier
+    ) {
+
     }
-
+*/
 }
 
-@Preview
-@Composable
-fun HoursHeaderPreview() {
-    val hours = listOf(20, 21, 22, 23, 0, 1, 2)
-    HoursHeader(hours)
-}
 
-@Preview
-@Composable
-fun SleepBarPreview() {
-    SleepBar()
-}
+
+
