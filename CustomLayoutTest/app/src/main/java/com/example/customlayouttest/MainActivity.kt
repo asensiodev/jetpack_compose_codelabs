@@ -1,8 +1,10 @@
 package com.example.customlayouttest
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.customlayouttest.ui.theme.CustomLayoutTestTheme
+import java.time.DayOfWeek
+import java.time.format.TextStyle
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,9 +71,18 @@ fun HoursHeader(modifier: Modifier = Modifier) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun DayLabel(day: String, modifier: Modifier = Modifier) {
-    Text(text = day, fontWeight = FontWeight.Bold, modifier = modifier)
+fun DayLabel(dayOfWeek: DayOfWeek) {
+    Text(
+        text = dayOfWeek.getDisplayName(
+            TextStyle.SHORT, Locale.getDefault()
+        ),
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier
+            .height(24.dp)
+            .padding(start = 8.dp, end = 24.dp)
+    )
 }
 
 @Composable
@@ -86,23 +100,25 @@ fun SleepBar(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
 @Composable
-fun HoursHeaderPreview() {
-    HoursHeader()
+fun TimeGraph(
+    hoursHeader: @Composable () -> Unit,
+    rowCount: Int,
+    dayLabel: @Composable (index: Int) -> Unit,
+    sleepBar: @Composable () -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    val dayLabels = @Composable {
+        repeat(rowCount) { dayLabel(it) }
+    }
+
 }
 
 @Preview
 @Composable
-fun DayLabelPreview() {
-    DayLabel(
-        "Sun", modifier = Modifier.padding(
-            start = 10.dp,
-            top = 10.dp,
-            end = 15.dp,
-            bottom = 10.dp
-        )
-    )
+fun HoursHeaderPreview() {
+    HoursHeader()
 }
 
 @Preview
