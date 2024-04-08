@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun HeaderHours(modifier: Modifier = Modifier) {
+fun HoursHeader(modifier: Modifier = Modifier) {
     val hours = arrayOf(20, 21, 22, 23, 0, 1, 2)
     val brush = Brush.linearGradient(colors = listOf(Color.Blue, Color.Green))
 
@@ -88,8 +88,8 @@ fun SleepBar(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun HeaderPreview() {
-    HeaderHours()
+fun HoursHeaderPreview() {
+    HoursHeader()
 }
 
 @Preview
