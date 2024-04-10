@@ -45,6 +45,10 @@ class MainViewModel @Inject constructor(
     private var _suggestedDestinations = MutableStateFlow<List<ExploreModel>>(emptyList())
     var suggestedDestinations: StateFlow<List<ExploreModel>> = _suggestedDestinations.asStateFlow()
 
+    init {
+        _suggestedDestinations.value = destinationsRepository.destinations
+    }
+
     fun updatePeople(people: Int) {
         viewModelScope.launch {
             if (people > MAX_PEOPLE) {
