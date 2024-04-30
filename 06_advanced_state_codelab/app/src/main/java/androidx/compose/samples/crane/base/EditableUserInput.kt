@@ -23,9 +23,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.samples.crane.ui.captionTextStyle
 import androidx.compose.ui.graphics.SolidColor
@@ -34,8 +34,7 @@ import androidx.compose.ui.graphics.SolidColor
 fun CraneEditableUserInput(
     state: EditableUserInputState,
     caption: String? = null,
-    @DrawableRes vectorImageId: Int? = null,
-    onInputChanged: (String) -> Unit
+    @DrawableRes vectorImageId: Int? = null
 ) {
 
     CraneBaseUserInput(
@@ -46,10 +45,7 @@ fun CraneEditableUserInput(
     ) {
         BasicTextField(
             value = state.text,
-            onValueChange = {
-                state.updateText(it)
-                if (!state.isHint) onInputChanged(state.text)
-            },
+            onValueChange = { state.updateText(it) },
             textStyle = if (state.isHint) {
                 captionTextStyle.copy(color = LocalContentColor.current)
             } else {
@@ -88,6 +84,6 @@ class EditableUserInputState(private val hint: String, initialText: String) {
 
 @Composable
 fun rememberEditableUserInputState(hint: String): EditableUserInputState =
-    remember(hint) {
+    rememberSaveable(hint) {
         EditableUserInputState(hint, hint)
     }
